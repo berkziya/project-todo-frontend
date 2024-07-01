@@ -73,7 +73,7 @@ export default function Home() {
             <input type="checkbox" checked={task.completed} onChange={() => toggleCompletion(task.id)} />
             <span>{task.text}</span>
             <button onClick={() => removeTask(task.id)}>
-              <Image src="trash.svg" alt='Delete' />
+              <Image src="trash.svg" width='20' height='20' alt='Delete' />
             </button>
           </div>
         ))}

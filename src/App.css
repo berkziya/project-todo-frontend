@@ -50,7 +50,7 @@
   position: relative;
   display: inline-block;
   white-space: break-word;
-  max-width: 100%; /* Adjust based on your layout */
+  max-width: 100%;
   margin-left: 20px;
   margin-right: auto;
 }

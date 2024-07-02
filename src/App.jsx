@@ -1,10 +1,8 @@
-"use client";
-
 import React, { useState, useEffect } from "react";
-import Image from 'next/image';
-import "./styles/page.css";
+import "./App.css";
+import trashIcon from "./assets/trash.svg";
 
-export default function Home() {
+function App() {
   const [task, setTask] = useState("");
   const [tasks, setTasks] = useState([]);
 
@@ -24,7 +22,6 @@ export default function Home() {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (!task) return;
-    console.log(task);
     setTask("");
 
     const newTask = {
@@ -73,7 +70,7 @@ export default function Home() {
             <input type="checkbox" checked={task.completed} onChange={() => toggleCompletion(task.id)} />
             <span>{task.text}</span>
             <button onClick={() => removeTask(task.id)}>
-              <Image src="trash.svg" width='20' height='20' alt='Delete' />
+              <img src={trashIcon} alt='Delete' />
             </button>
           </div>
         ))}
@@ -81,3 +78,5 @@ export default function Home() {
     </div>
   );
 }
+
+export default App;

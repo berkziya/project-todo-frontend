@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   tasks: [],
-  IsTrashOpen: false,
+  isTrashOpen: false,
 };
 
 export const todoSlice = createSlice({

@@ -17,7 +17,7 @@ const App = () => {
       <div className='max-w-full sm:max-w-lg mx-auto mt-10 p-4 bg-white shadow-md rounded-lg'>
         <Todo />
       </div>
-      <TrashPopup isOpen={todoState.IsTrashOpen === true} toClose={() => dispatch(closeTrash())} />
+      <TrashPopup toClose={() => dispatch(closeTrash())} />
     </div>
   );
 };

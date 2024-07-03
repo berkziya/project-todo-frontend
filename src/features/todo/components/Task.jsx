@@ -6,7 +6,7 @@ const Task = ({ task, icon = 'delete', func = null }) => {
   return (
     <div className={`flex items-center gap-3 p-2 even:bg-gray-200 ${task.status === 'done' ? 'bg-green-100 even:bg-green-200' : ''} rounded-sm`}>
       {icon === 'delete' && (
-        <input type='checkbox' checked={task.completed} onChange={() => dispatch(toggleCompletion(task.id))} className='size-5 flex-shrink-0' />
+        <input type='checkbox' checked={task.status === "done"} onChange={() => dispatch(toggleCompletion(task.id))} className='size-5 flex-shrink-0' />
       )}
       <span className={`${task.status === 'done' ? 'text-gray-400 italic' : ''}`}>{task.text}</span>
       {func && icon === 'delete' && (

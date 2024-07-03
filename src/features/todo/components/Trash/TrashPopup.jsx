@@ -8,8 +8,8 @@ const TrashPopup = ({ toClose }) => {
   if (todoState.isTrashOpen !== true) return null;
 
   return (
-    <Popup {toClose}>
-      <Trash />
+    <Popup toClose={toClose}>
+      <Trash toClose={toClose} />
     </Popup>
   );
 };

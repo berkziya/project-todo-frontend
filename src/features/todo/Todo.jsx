@@ -23,6 +23,8 @@ function Todo() {
         {
           todoState.tasks.filter(k => k.status === 'deleted').length > 0 &&
           <button onClick={() => dispatch(openTrash())} className='bg-red-500 text-white px-3 py-1 rounded'>Trash</button>
+          ||
+          <div className='invisible px-8 py-1'></div>
         }
       </div>
       <div className='mb-4'>

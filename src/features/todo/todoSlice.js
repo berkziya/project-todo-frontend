@@ -63,9 +63,13 @@ export const todoSlice = createSlice({
     },
     closeTrash: (state) => {
       state.isTrashOpen = false;
+    },
+    emptyTrash: (state) => {
+      state.tasks = state.tasks.filter((task) => task.status !== 'deleted');
+      state.isTrashOpen = false;
     }
   }
 });
 
-export const { addTask, deleteTask, restoreTask, toggleCompletion, openTrash, closeTrash } = todoSlice.actions;
+export const { addTask, deleteTask, restoreTask, toggleCompletion, openTrash, closeTrash, emptyTrash } = todoSlice.actions;
 export default todoSlice.reducer;

@@ -1,8 +1,36 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  tasks: [],
-  isTrashOpen: false,
+  activeList: 1,
+  lists: {
+    1: {
+      name: 'Todo List',
+      tasks: [
+        {
+          id: 1,
+          text: 'Learn React',
+          status: 'pending',
+          completedDate: 0,
+          deletedDate: 0
+        },
+        {
+          id: 2,
+          text: 'Learn Redux',
+          status: 'done',
+          completedDate: Date.now(),
+          deletedDate: 0
+        },
+        {
+          id: 3,
+          text: 'Learn Redux Toolkit',
+          status: 'deleted',
+          completedDate: 0,
+          deletedDate: Date.now()
+        }
+      ]
+    },
+    isTrashOpen: false,
+  }
 };
 
 export const todoSlice = createSlice({
@@ -10,11 +38,22 @@ export const todoSlice = createSlice({
   initialState,
   reducers: {
     addTask: (state, action) => {
-      state.tasks = [action.payload, ...state.tasks];
+      const { taskId, text, status, completedDate, deletedDate, listId } = action.payload;
+      state.lists[listId].tasks = [
+        {
+          id: taskId,
+          text,
+          status,
+          completedDate,
+          deletedDate
+        },
+        ...state.lists[listId].tasks
+      ];
     },
     deleteTask: (state, action) => {
-      state.tasks = state.tasks.map((task) => {
-        if (task.id === action.payload) {
+      const { listId, taskId } = action.payload;
+      state.lists[listId].tasks = state.lists[listId].tasks.map((task) => {
+        if (task.id === taskId) {
           return {
             ...task,
             status: 'deleted',
@@ -25,37 +64,38 @@ export const todoSlice = createSlice({
       });
     },
     restoreTask: (state, action) => {
-      state.tasks = state.tasks.map((task) => {
-        if (task.id === action.payload) {
+      const { taskId, listId } = action.payload;
+      state.lists[listId].tasks = state.lists[listId].tasks.map((task) => {
+        if (task.id === taskId) {
           return {
             ...task,
-            status: task.status === 'deleted' ? 'pending' : task.status,
+            status: 'pending',
             deletedDate: 0
           };
         }
         return task;
       });
-      if (state.tasks.filter((task) => task.status === 'deleted').length === 0) {
+      if (state.lists[listId].tasks.filter((task) => task.status === 'deleted').length === 0) {
         state.isTrashOpen = false;
       }
     },
     toggleCompletion: (state, action) => {
-      state.tasks = state.tasks.map((task) => {
-        if (task.id === action.payload) {
+      const { taskId, listId } = action.payload;
+      console.log('toggleCompletion', taskId, listId);
+      state.lists[listId].tasks = state.lists[listId].tasks.map((task) => {
+        if (task.id === taskId) {
           return {
             ...task,
-            status: task.status === 'done' ? 'pending' : 'done',
-            completedDate: task.status === 'done' ? 0 : Date.now()
+            status: task.status === 'pending' ? 'done' : 'pending',
+            completedDate: task.status === 'pending' ? Date.now() : 0,
           };
         }
         return task;
-      });
-
-      state.tasks.sort((a, b) => {
-        if (a.status === 'pending' && b.status === 'pending') {
-          return b.completedDate - a.completedDate;
+      }).sort((a, b) => {
+        if (a.status === 'done' && b.status === 'done') {
+          return b.completedDate - a.completedDate; // Sort done tasks by completedDate descending
         }
-        return a.status === 'done' ? 1 : -1;
+        return a.status === 'pending' ? -1 : 1; // Pending tasks first
       });
     },
     openTrash: (state) => {
@@ -64,12 +104,52 @@ export const todoSlice = createSlice({
     closeTrash: (state) => {
       state.isTrashOpen = false;
     },
-    emptyTrash: (state) => {
-      state.tasks = state.tasks.filter((task) => task.status !== 'deleted');
+    emptyTrash: (state, action) => {
+      const { listId } = action.payload;
+      state.lists[listId].tasks = state.lists[listId].tasks.filter((task) => task.status !== 'deleted');
       state.isTrashOpen = false;
+    },
+    changeList: (state, action) => {
+      state.activeList = action.payload;
+    },
+    createList: (state) => {
+      const randomListString = Math.random().toString(36).substring(2);
+      state.lists = {
+        ...state.lists,
+        [randomListString]: {
+          name: 'New List',
+          tasks: []
+        }
+      };
+    },
+    deleteList: (state, action) => {
+      const { listId } = action.payload;
+      delete state.lists[listId];
+    },
+    changeListName: (state, action) => {
+      const { listId, name } = action.payload;
+      state.lists = {
+        ...state.lists,
+        [listId]: {
+          name,
+          tasks: state.lists[listId].tasks
+        }
+      };
     }
   }
 });
 
-export const { addTask, deleteTask, restoreTask, toggleCompletion, openTrash, closeTrash, emptyTrash } = todoSlice.actions;
+export const {
+  addTask,
+  deleteTask,
+  restoreTask,
+  toggleCompletion,
+  openTrash,
+  closeTrash,
+  emptyTrash,
+  changeList,
+  createList,
+  deleteList,
+  changeListName
+} = todoSlice.actions;
 export default todoSlice.reducer;

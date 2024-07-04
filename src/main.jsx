@@ -1,4 +1,4 @@
-import ReactDOM from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 import './index.css';
 
 import store from './store';
@@ -15,14 +15,16 @@ const App = () => {
   return (
     <div>
       <div className='max-w-full sm:max-w-lg mx-auto mt-10 p-4 bg-white shadow-md rounded-lg'>
-        <Todo />
+        <Todo listId={1} />
       </div>
-      <TrashPopup toClose={() => dispatch(closeTrash())} />
+      <TrashPopup toClose={() => dispatch(closeTrash())} listId={1} />
     </div>
   );
 };
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+const container = document.getElementById('root');
+const root = createRoot(container);
+root.render(
   <Provider store={store}>
     <App />
   </Provider>

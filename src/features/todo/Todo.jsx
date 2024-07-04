@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addTask, deleteTask, openTrash } from './todoSlice';
 import Task from './components/Task';
 
-function Todo() {
+function Todo({ listId }) {
   const todoState = useSelector((state) => state.todo);
   const dispatch = useDispatch();
   const taskInputRef = useRef(null);
@@ -12,16 +12,26 @@ function Todo() {
     event.preventDefault();
     const task = taskInputRef.current.value;
     if (!task) return;
-    dispatch(addTask({ id: Date.now(), text: task, status: 'pending', completedDate: 0, deletedDate: 0 }));
+    dispatch(addTask({ taskId: Date.now(), text: task, status: 'pending', completedDate: 0, deletedDate: 0, listId }));
     taskInputRef.current.value = '';
   };
 
   return (
     <div>
-      <div className='flex justify mb-4'>
-        <h1 className='text-2xl font-semibold text-center mx-auto'>Todo App</h1>
+      <div className='flex justify-end mb-4'>
+        <div className='invisible px-5 py-1'></div>
+        <div className='flex-grow'>
+          <input
+            type='text'
+            defaultValue={todoState.lists[listId].name}
+            spellCheck='false'
+            className='text-2xl font-semibold text-center w-full focus:outline-none'
+          />
+          <div className='border-b-2 border-t-0 border-dashed border-gray-300 w-1/2 mx-auto'></div>
+        </div>
+        <div className='invisible px-3 py-1'></div>
         {
-          todoState.tasks.filter(k => k.status === 'deleted').length > 0 &&
+          todoState.lists[listId].tasks.filter(k => k.status === 'deleted').length > 0 &&
           <button onClick={() => dispatch(openTrash())} className='bg-red-500 text-white px-3 py-1 rounded'>Trash</button>
           ||
           <div className='invisible px-8 py-1'></div>
@@ -34,7 +44,7 @@ function Todo() {
         </form>
       </div>
       <div className='p-4 bg-gray-100 rounded'>
-        {todoState.tasks.filter(e => e.status !== 'deleted').map(k => (<Task key={k.id} task={k} icon='delete' func={() => dispatch(deleteTask(k.id))} />))}
+        {todoState.lists[listId].tasks.filter(e => e.status !== 'deleted').map(k => (<Task listId={listId} key={k.id} task={k} icon='delete' func={() => dispatch(deleteTask({ taskId: k.id, listId }))} />))}
       </div>
     </div >
   );

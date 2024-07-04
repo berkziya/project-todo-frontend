@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.ellipsis {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  transition: max-height 0.7s ease;
+  max-height: 40px;
+  height: 100px;
+  opacity: 1;
+}
+
+.ellipsis:hover,
+.ellipsis:focus {
+  transition: max-height 0.8s ease;
+  max-height: 200px;
+  white-space: normal;
+  opacity: 1;
+}

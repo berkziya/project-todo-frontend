@@ -5,15 +5,14 @@ import todoReducer from './features/todo/todoSlice';
 const localStorageMiddleware = store => next => action => {
   const result = next(action);
   const state = store.getState();
-  localStorage.setItem('tasks', JSON.stringify(state.todo.tasks));
+  localStorage.setItem('lists', JSON.stringify(state.todo.lists));
   return result;
 };
 
-// Function to rehydrate state from localStorage
 const reHydrateStore = () => {
-  const tasksFromStorage = localStorage.getItem('tasks');
-  if (tasksFromStorage !== null) {
-    return { todo: { tasks: JSON.parse(tasksFromStorage) } };
+  const storedLists = localStorage.getItem('lists');
+  if (storedLists !== null) {
+    return { todo: { lists: JSON.parse(storedLists) } };
   }
   return undefined;
 };

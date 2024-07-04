@@ -1,42 +1,24 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  activeList: 1,
+  activeList: 0,
   lists: {
-    1: {
-      name: 'Todo List',
-      tasks: [
-        {
-          id: 1,
-          text: 'Learn React',
-          status: 'pending',
-          completedDate: 0,
-          deletedDate: 0
-        },
-        {
-          id: 2,
-          text: 'Learn Redux',
-          status: 'done',
-          completedDate: Date.now(),
-          deletedDate: 0
-        },
-        {
-          id: 3,
-          text: 'Learn Redux Toolkit',
-          status: 'deleted',
-          completedDate: 0,
-          deletedDate: Date.now()
-        }
-      ]
-    },
-    isTrashOpen: false,
-  }
+    0: {
+      name: 'To Do',
+      tasks: []
+    }
+  },
+  isTrashOpen: false
 };
 
 export const todoSlice = createSlice({
   name: 'todo',
   initialState,
   reducers: {
+    setActiveList: (state, action) => {
+      const { listId } = action.payload;
+      state.activeList = listId;
+    },
     addTask: (state, action) => {
       const { taskId, text, status, completedDate, deletedDate, listId } = action.payload;
       state.lists[listId].tasks = [
@@ -79,9 +61,20 @@ export const todoSlice = createSlice({
         state.isTrashOpen = false;
       }
     },
+    updateTaskText: (state, action) => {
+      const { taskId, listId, text } = action.payload;
+      state.lists[listId].tasks = state.lists[listId].tasks.map((task) => {
+        if (task.id === taskId) {
+          return {
+            ...task,
+            text
+          };
+        }
+        return task;
+      });
+    },
     toggleCompletion: (state, action) => {
       const { taskId, listId } = action.payload;
-      console.log('toggleCompletion', taskId, listId);
       state.lists[listId].tasks = state.lists[listId].tasks.map((task) => {
         if (task.id === taskId) {
           return {
@@ -112,11 +105,11 @@ export const todoSlice = createSlice({
     changeList: (state, action) => {
       state.activeList = action.payload;
     },
-    createList: (state) => {
-      const randomListString = Math.random().toString(36).substring(2);
+    createList: (state, action) => {
+      const { listId } = action.payload;
       state.lists = {
         ...state.lists,
-        [randomListString]: {
+        [listId]: {
           name: 'New List',
           tasks: []
         }
@@ -127,22 +120,18 @@ export const todoSlice = createSlice({
       delete state.lists[listId];
     },
     changeListName: (state, action) => {
-      const { listId, name } = action.payload;
-      state.lists = {
-        ...state.lists,
-        [listId]: {
-          name,
-          tasks: state.lists[listId].tasks
-        }
-      };
+      const { name, listId } = action.payload;
+      state.lists[listId].name = name;
     }
   }
 });
 
 export const {
+  setActiveList,
   addTask,
   deleteTask,
   restoreTask,
+  updateTaskText,
   toggleCompletion,
   openTrash,
   closeTrash,

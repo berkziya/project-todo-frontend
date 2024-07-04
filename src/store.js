@@ -6,13 +6,21 @@ const localStorageMiddleware = store => next => action => {
   const result = next(action);
   const state = store.getState();
   localStorage.setItem('lists', JSON.stringify(state.todo.lists));
+  localStorage.setItem('activeList', state.todo.activeList);
   return result;
 };
 
 const reHydrateStore = () => {
   const storedLists = localStorage.getItem('lists');
-  if (storedLists !== null) {
-    return { todo: { lists: JSON.parse(storedLists) } };
+  const activeList = localStorage.getItem('activeList');
+  if (storedLists !== null && activeList !== null) {
+    return {
+      todo:
+      {
+        lists: JSON.parse(storedLists),
+        activeList: activeList,
+      }
+    };
   }
   return undefined;
 };

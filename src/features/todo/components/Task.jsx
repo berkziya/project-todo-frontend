@@ -1,6 +1,5 @@
-import React from 'react';
 import { useDispatch } from 'react-redux';
-import { toggleCompletion } from '../todoSlice';
+import { toggleCompletion, updateTaskText } from '../todoSlice';
 
 const Task = ({ listId, task, icon = 'delete', func = null }) => {
   const dispatch = useDispatch();
@@ -11,14 +10,15 @@ const Task = ({ listId, task, icon = 'delete', func = null }) => {
         <input
           type='checkbox'
           checked={task.status === 'done'}
-          onChange={() => {
-            dispatch(toggleCompletion({ taskId: task.id, listId }));
-          }}
+          onChange={() => { dispatch(toggleCompletion({ taskId: task.id, listId })); }}
           className='size-5 flex-shrink-0'
         />
       )}
       <textarea
         defaultValue={task.text}
+        onBlur={(event) => {
+          dispatch(updateTaskText({ taskId: task.id, listId, text: event.target.value }));
+        }}
         className={`${task.status === 'done' ? 'text-gray-400 italic' : ''} ellipsis p-2 flex-auto bg-transparent`}
       />
       {func && (

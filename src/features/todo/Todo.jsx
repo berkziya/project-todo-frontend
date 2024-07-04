@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addTask, deleteTask, openTrash } from './todoSlice';
+import { addTask, deleteTask, openTrash, changeListName } from './todoSlice';
 import Task from './components/Task';
 
 function Todo({ listId }) {
@@ -23,7 +23,9 @@ function Todo({ listId }) {
         <div className='flex-grow'>
           <input
             type='text'
+            placeholder='¯\_(ツ)_/¯'
             defaultValue={todoState.lists[listId].name}
+            onBlur={(e) => { dispatch(changeListName({ name: e.target.value, listId })); }}
             spellCheck='false'
             className='text-2xl font-semibold text-center w-full focus:outline-none'
           />

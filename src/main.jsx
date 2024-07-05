@@ -17,7 +17,6 @@ const App = () => {
   let listId = todoState.activeList;
 
   useEffect(() => {
-    console.log('useEffect');
     if (!listId || !todoState.lists[listId]) {
       listId = Object.keys(todoState.lists)[0] || '0';
       if (!todoState.lists[listId]) {
@@ -34,13 +33,15 @@ const App = () => {
             <Lists />
           </div>
         </div>
-        {todoState.lists[listId] && (
-          <div className='w-full basis-2/3'>
-            <div className='p-4 md:max-w-2xl bg-white shadow-md rounded-lg'>
-              <Todo listId={listId} />
-            </div>
+        <div className='w-full basis-2/3'>
+          <div
+            className={`p-4 px-3 md:px-5 md:max-w-2xl min-h-[174px] ${
+              todoState.lists[listId] ? 'bg-white' : 'bg-gray-100'
+            } shadow-md rounded-lg`}
+          >
+            {todoState.lists[listId] && <Todo listId={listId} />}
           </div>
-        )}
+        </div>
       </div>
       <TrashPopup toClose={() => dispatch(closeTrash())} listId={listId} />
     </div>

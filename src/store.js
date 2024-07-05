@@ -15,8 +15,7 @@ const reHydrateStore = () => {
   const activeList = localStorage.getItem('activeList');
   if (storedLists !== null && activeList !== null) {
     return {
-      todo:
-      {
+      todo: {
         lists: JSON.parse(storedLists),
         activeList: activeList,
       }

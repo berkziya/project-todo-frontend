@@ -1,6 +1,6 @@
-import { useSelector } from 'react-redux';
-import Popup from '../../../../shared/components/Popup';
-import Trash from './Trash';
+import { useSelector } from "react-redux";
+import Popup from "../../../../shared/components/Popup";
+import Trash from "./Trash";
 
 const TrashPopup = ({ toClose, listId }) => {
   const todoState = useSelector((state) => state.todo);
@@ -12,6 +12,5 @@ const TrashPopup = ({ toClose, listId }) => {
     </Popup>
   );
 };
-
 
 export default TrashPopup;

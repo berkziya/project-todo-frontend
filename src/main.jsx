@@ -1,4 +1,5 @@
 import { createRoot } from 'react-dom/client';
+import { useEffect } from 'react';
 import './index.css';
 
 import store from './store';
@@ -15,23 +16,31 @@ const App = () => {
 
   let listId = todoState.activeList;
 
-  if (!listId || !todoState.lists[listId]) {
-    listId = 0;
-  }
-  if (!todoState.lists[listId]) {
-    listId = Object.keys(todoState.lists)[0];
-  }
-  if (!listId) {
-    dispatch(createList({ listId: '0' }));
-  }
+  useEffect(() => {
+    console.log('useEffect');
+    if (!listId || !todoState.lists[listId]) {
+      listId = Object.keys(todoState.lists)[0] || '0';
+      if (!todoState.lists[listId]) {
+        dispatch(createList({ listId: '0' }));
+      }
+    }
+  }, [dispatch, listId, todoState.lists]);
 
   return (
     <div>
-      <div>
-        <Lists />
-      </div>
-      <div className='max-w-full sm:max-w-lg mx-auto mt-10 p-4 bg-white shadow-md rounded-lg'>
-        <Todo listId={listId} />
+      <div className='flex flex-col-reverse md:flex-row p-4 mt-10'>
+        <div className='w-full basis-1/3'>
+          <div className='p-4 mt-4 md:mt-0 md:mr-4 md:min-w-80 md:max-w-96 bg-white shadow-md rounded-lg'>
+            <Lists />
+          </div>
+        </div>
+        {todoState.lists[listId] && (
+          <div className='w-full basis-2/3'>
+            <div className='p-4 md:max-w-2xl bg-white shadow-md rounded-lg'>
+              <Todo listId={listId} />
+            </div>
+          </div>
+        )}
       </div>
       <TrashPopup toClose={() => dispatch(closeTrash())} listId={listId} />
     </div>

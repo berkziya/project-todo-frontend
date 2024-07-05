@@ -8,9 +8,13 @@ const Lists = () => {
 
   return (
     <div>
-      <button onClick={() => dispatch(createList({ listId: randomString() }))}>
+      <button
+        onClick={() => dispatch(createList({ listId: randomString() }))}
+        className='p-2 text-gray-500 hover:text-gray-700 hover:font-semibold'
+      >
         Add list
       </button>
+      <div className='border-b border-gray-200'></div>
       {Object.entries(todoState.lists).map(([listId, list], _i) => (
         <div
           key={listId}
@@ -18,7 +22,7 @@ const Lists = () => {
         >
           <div className='flex items-center'>
             <button
-              className={`text-gray-500 hover:text-gray-700 ${
+              className={`text-gray-500 hover:text-gray-700 hover:font-semibold ${
                 todoState.activeList === listId ? 'font-semibold' : ''
               }`}
               onClick={() => dispatch(setActiveList({ listId }))}
@@ -27,7 +31,7 @@ const Lists = () => {
             </button>
           </div>
           <button
-            className='text-gray-500 hover:text-gray-700'
+            className='text-gray-500 hover:text-red-500 hover:font-semibold'
             onClick={() => dispatch(deleteList({ listId }))}
           >
             Delete

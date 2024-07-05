@@ -121,7 +121,11 @@ export const todoSlice = createSlice({
     },
     changeListName: (state, action) => {
       const { name, listId } = action.payload;
-      state.lists[listId].name = name;
+      if (name) {
+        state.lists[listId].name = name;
+      } else {
+        state.lists[listId].name = '¯\\_(ツ)_/¯';
+      }
     }
   }
 });

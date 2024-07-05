@@ -110,7 +110,7 @@ export const todoSlice = createSlice({
       state.lists = {
         ...state.lists,
         [listId]: {
-          name: 'My Todo List',
+          name: `My Todo List ${Object.keys(state.lists).length + 1}`,
           tasks: []
         }
       };

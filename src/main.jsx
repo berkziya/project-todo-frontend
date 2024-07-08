@@ -18,5 +18,5 @@ root.render(
         <Route path='/project-todo-frontend/:listId' element={<App />} />
       </Routes>
     </BrowserRouter>
-  </Provider>
+  </Provider>,
 );

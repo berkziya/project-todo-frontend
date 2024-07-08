@@ -13,6 +13,7 @@ import Lists from './features/todo/components/Lists/Lists';
 import Footer from './shared/components/Footer';
 import EmojiSelector from './features/todo/components/EmojiSelector';
 import { useParams, useNavigate } from 'react-router-dom';
+import { randomString } from './shared/utils/misc';
 
 const App = () => {
   const todoState = useSelector((state) => state.todo);
@@ -22,10 +23,10 @@ const App = () => {
 
   useEffect(() => {
     if (!listId || !todoState.lists[listId]) {
-      listId = todoState.lists ? Object.keys(todoState.lists)[0] : '0';
+      listId = Object.keys(todoState.lists)[0] ?? null;
     }
     if (!todoState.lists[listId]) {
-      dispatch(createList({ listId: '0' }));
+      dispatch(createList({ listId: randomString() }));
     }
     dispatch(setActiveList({ listId }));
     navigate(`/project-todo-frontend/${listId}`);

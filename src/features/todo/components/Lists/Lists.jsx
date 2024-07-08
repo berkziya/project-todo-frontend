@@ -14,7 +14,7 @@ const Lists = () => {
   function areYouSure(listId) {
     if (
       window.confirm(
-        'Are you sure? This will delete the list and all its tasks.'
+        'Are you sure? This will delete the list and all its tasks.',
       )
     ) {
       dispatch(deleteList({ listId }));

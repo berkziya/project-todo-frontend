@@ -40,7 +40,7 @@ const Task = ({ listId, task, icon = 'delete', func = null }) => {
               taskId: task.id,
               listId,
               text: event.target.value,
-            })
+            }),
           );
         }}
         onKeyDown={(event) => {

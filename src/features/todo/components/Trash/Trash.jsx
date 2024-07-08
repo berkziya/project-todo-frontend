@@ -25,7 +25,7 @@ const Trash = ({ toClose, listId }) => {
   const dispatch = useDispatch();
 
   const deletedTasks = todoState.lists[listId].tasks.filter(
-    (task) => task.status === 'deleted'
+    (task) => task.status === 'deleted',
   );
 
   const areYouSure = () => {

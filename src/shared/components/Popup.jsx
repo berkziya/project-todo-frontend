@@ -34,7 +34,7 @@ const Popup = ({ children, toClose, closable = true, closeIcon = null }) => {
         {children}
       </div>
     </div>,
-    document.body
+    document.body,
   );
 };
 

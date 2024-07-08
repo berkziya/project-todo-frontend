@@ -15,7 +15,7 @@ function Todo({ listId }) {
   const dispatch = useDispatch();
   const taskInputRef = useRef(null);
   const trashAmount = todoState.lists[listId].tasks.filter(
-    (e) => e.status === 'deleted'
+    (e) => e.status === 'deleted',
   ).length;
 
   const handleSubmit = (event) => {
@@ -30,7 +30,7 @@ function Todo({ listId }) {
         completedDate: 0,
         deletedDate: 0,
         listId,
-      })
+      }),
     );
     taskInputRef.current.value = '';
   };

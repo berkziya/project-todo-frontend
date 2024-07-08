@@ -31,7 +31,7 @@ function Todo({ listId }) {
 
   useEffect(() => {
     const listNameInput = document.querySelector('#list-name');
-    listNameInput.value = todoState.lists[listId].name;
+    listNameInput.value = todoState.lists[todoState.activeList].name;
   }, [todoState.activeList, todoState.lists]);
 
   return (

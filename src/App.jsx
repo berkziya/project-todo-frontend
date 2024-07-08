@@ -26,31 +26,37 @@ const App = () => {
 
   return (
     <div className='flex flex-col'>
-      <div className='flex-grow'>
-        <div className='flex flex-col-reverse md:flex-row mt-10'>
-          <div className='basis-1/3'>
-            <div className='p-4 mt-4 md:mt-0 md:mr-4 md:min-w-80 md:max-w-96 bg-white shadow-md rounded-lg'>
-              <Lists />
-            </div>
-          </div>
-          <div className='basis-2/3'>
-            <div
-              className={`p-4 px-3 md:px-5 md:max-w-2xl min-h-[230px] ${
-                todoState.lists[listId] ? 'bg-white' : 'bg-gray-100'
-              } shadow-md rounded-lg`}
-            >
-              {todoState.lists[listId] ? (
-                <Todo listId={listId} />
-              ) : (
-                <div className='text-center text-xl mt-8 font-semibold text-gray-400'>
-                  Select a list or create a new one ¯\_(ツ)_/¯
-                </div>
-              )}
-            </div>
+      <div className='flex flex-col-reverse md:flex-row'>
+        <div className='p-4 md:mr-4 md:min-w-80 md:max-w-96 shadow-md basis-1/3 min-h-screen'>
+          <div className='m-3'>
+            <img
+              src='logo.png'
+              className='mb-0 md:mb-10 max-w-64 mx-auto invisible h-0 md:visible md:h-auto'
+              alt='logo'
+            />
+            <Lists />
+            <Footer />
           </div>
         </div>
+        <div className='basis-3/4 flex-col'>
+          <img
+            src='logo.png'
+            className='mb-0 md:mb-10 max-w-64 mx-auto visible h-auto md:invisible md:h-0 mt-10'
+            alt='logo'
+          />
+          <div className='p-4 mt-10 px-3 sm:px-10 transition-all'>
+            {todoState.lists[listId] ? (
+              <Todo listId={listId} />
+            ) : (
+              <div className='text-center text-xl mt-8 font-semibold text-gray-400'>
+                Select a list or create a new one ¯\_(ツ)_/¯
+              </div>
+            )}
+          </div>
+          <div className='flex-grow'></div>
+        </div>
       </div>
-      <Footer />
+
       <EmojiSelector />
       <TrashPopup toClose={() => dispatch(closeTrash())} listId={listId} />
     </div>

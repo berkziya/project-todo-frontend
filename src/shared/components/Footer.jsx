@@ -2,7 +2,7 @@ import { FaRegHeart } from 'react-icons/fa6';
 
 const Footer = () => {
   return (
-    <footer className='text-gray-400 text-center py-5'>
+    <footer className='text-gray-400 text-center py-10'>
       <div className='flex justify-center space-x-4 mb-3'>
         {/* <Link to='/' className='hover:text-teal-300'>
           Home

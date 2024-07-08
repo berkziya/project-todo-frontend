@@ -20,7 +20,7 @@ const Lists = () => {
   }
 
   return (
-    <div className='min-h-screen flex flex-col'>
+    <div className='flex flex-col'>
       <div className='text-xl font-semibold text-gray-600 mb-3 ml-3'>
         My Lists
       </div>
@@ -29,7 +29,7 @@ const Lists = () => {
         {Object.entries(todoState.lists).map(([listId, list], _i) => (
           <button
             key={listId}
-            className={`flex w-full items-center justify-between p-3 border-b border-gray-200 text-gray-500 hover:bg-teal-100 hover:text-gray-700 hover:font-semibold ${
+            className={`rounded-lg flex w-full items-center justify-between p-3 border-b border-gray-200 text-gray-500 hover:bg-teal-100 hover:text-gray-700 hover:font-semibold ${
               todoState.activeList === listId ? 'font-bold bg-teal-50' : ''
             }`}
             onClick={() => dispatch(setActiveList({ listId }))}

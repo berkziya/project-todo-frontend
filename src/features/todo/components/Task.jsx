@@ -2,6 +2,7 @@ import { useDispatch } from 'react-redux';
 import { toggleCompletion, updateTaskText } from '../todoSlice';
 import { FaRegTrashCan, FaCheck } from 'react-icons/fa6';
 import { LiaTrashRestoreAltSolid } from 'react-icons/lia';
+import { RiCheckboxBlankLine } from 'react-icons/ri';
 
 const Task = ({ listId, task, icon = 'delete', func = null }) => {
   const dispatch = useDispatch();
@@ -20,11 +21,15 @@ const Task = ({ listId, task, icon = 'delete', func = null }) => {
           }}
           className={`mx-3 ${
             task.status === 'pending'
-              ? 'text-gray-400 hover:text-teal-500'
+              ? 'text-gray-300 hover:text-teal-500'
               : 'text-teal-600 hover:text-purple-300'
           }`}
         >
-          <FaCheck size={22} />
+          {task.status === 'pending' ? (
+            <RiCheckboxBlankLine size={28} />
+          ) : (
+            <FaCheck size={22} />
+          )}
         </button>
       )}
       <textarea

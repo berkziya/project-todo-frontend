@@ -2,7 +2,7 @@ import { useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addTask, deleteTask, openTrash, changeListName } from './todoSlice';
 import Task from './components/Task';
-import { FaPlus, FaTrash } from 'react-icons/fa6';
+import { FaPlus, FaTrash, FaPencil } from 'react-icons/fa6';
 
 function Todo({ listId }) {
   const todoState = useSelector((state) => state.todo);
@@ -40,23 +40,36 @@ function Todo({ listId }) {
         <div className='flex justify-end mb-4'>
           <div className='invisible px-5 py-1'></div>
           <div className='flex-grow'>
-            <input
-              id='list-name'
-              type='text'
-              placeholder='¯\_(ツ)_/¯'
-              defaultValue={todoState.lists[todoState.activeList].name}
-              onBlur={(e) => {
-                dispatch(changeListName({ name: e.target.value, listId }));
-              }}
-              onKeyDown={(event) => {
-                if (event.key === 'Enter') {
-                  event.preventDefault();
-                  event.target.blur();
-                }
-              }}
-              spellCheck='false'
-              className='text-2xl font-semibold text-center w-full border-blue-900 focus:outline-none'
-            />
+            <div className='flex items-center justify-center'>
+              <div className='text-3xl'>
+                {todoState.lists[listId].emoji ?? '👻'}
+              </div>
+              <input
+                id='list-name'
+                type='text'
+                placeholder='¯\_(ツ)_/¯'
+                defaultValue={todoState.lists[todoState.activeList].name}
+                onBlur={(e) => {
+                  dispatch(changeListName({ name: e.target.value, listId }));
+                }}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter') {
+                    event.preventDefault();
+                    event.target.blur();
+                  }
+                }}
+                spellCheck='false'
+                className='text-2xl font-semibold text-center w-full focus:outline-none'
+              />
+              <button
+                onClick={() => {
+                  const listNameInput = document.querySelector('#list-name');
+                  listNameInput.focus();
+                }}
+              >
+                <FaPencil className=' text-gray-400 ml-2' />
+              </button>
+            </div>
             <div className='border-b-2 border-t-0 border-dashed border-gray-300 w-1/2 mx-auto'></div>
           </div>
           <div className='invisible px-3 py-1'></div>
@@ -96,17 +109,24 @@ function Todo({ listId }) {
           </form>
         </div>
         <div className='p-4 bg-gray-100 rounded'>
-          {todoState.lists[listId].tasks
-            .filter((e) => e.status !== 'deleted')
-            .map((k) => (
-              <Task
-                listId={listId}
-                key={k.id}
-                task={k}
-                icon='delete'
-                func={() => dispatch(deleteTask({ taskId: k.id, listId }))}
-              />
-            ))}
+          {todoState.lists[listId].tasks.filter((e) => e.status !== 'deleted')
+            .length > 0 ? (
+            todoState.lists[listId].tasks
+              .filter((e) => e.status !== 'deleted')
+              .map((k) => (
+                <Task
+                  listId={listId}
+                  key={k.id}
+                  task={k}
+                  icon='delete'
+                  func={() => dispatch(deleteTask({ taskId: k.id, listId }))}
+                />
+              ))
+          ) : (
+            <div className='ml-8 text-gray-400 min-h-[40px] mt-4'>
+              No tasks yet
+            </div>
+          )}
         </div>
       </div>
     )

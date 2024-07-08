@@ -29,7 +29,9 @@ const Trash = ({ toClose, listId }) => {
   );
 
   const areYouSure = () => {
-    if (window.confirm('Are you sure?')) {
+    if (
+      window.confirm(' Are you sure? This will delete all tasks permanently.')
+    ) {
       dispatch(emptyTrash({ listId }));
       toClose();
     }

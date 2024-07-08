@@ -6,6 +6,7 @@ import Todo from './features/todo/Todo.jsx';
 import { closeTrash, createList } from './features/todo/todoSlice';
 import TrashPopup from './features/todo/components/Trash/TrashPopup.jsx';
 import Lists from './features/todo/components/Lists/Lists';
+import Footer from './shared/components/Footer';
 
 const App = () => {
   const todoState = useSelector((state) => state.todo);
@@ -23,28 +24,32 @@ const App = () => {
   }, [dispatch, listId, todoState.lists]);
 
   return (
-    <div>
-      <div className='flex flex-col-reverse md:flex-row p-4 mt-10'>
-        <div className='w-full basis-1/3'>
-          <div className='p-4 mt-4 md:mt-0 md:mr-4 md:min-w-80 md:max-w-96 bg-white shadow-md rounded-lg'>
-            <Lists />
+    <div className='flex flex-col'>
+      <div className='flex-grow'>
+        <div className='flex flex-col-reverse md:flex-row mt-10'>
+          <div className='basis-1/3'>
+            <div className='p-4 mt-4 md:mt-0 md:mr-4 md:min-w-80 md:max-w-96 bg-white shadow-md rounded-lg'>
+              <Lists />
+            </div>
           </div>
-        </div>
-        <div className='w-full basis-2/3'>
-          <div
-            className={`p-4 px-3 md:px-5 md:max-w-2xl min-h-[174px] ${
-              todoState.lists[listId] ? 'bg-white' : 'bg-gray-100'
-            } shadow-md rounded-lg`}
-          >
-            {!todoState.lists[listId] && (
-              <div className='text-center text-xl mt-1 font-semibold text-gray-400'>
-                Select a list or create a new one ¯\_(ツ)_/¯
-              </div>
-            )}
-            {todoState.lists[listId] && <Todo listId={listId} />}
+          <div className='basis-2/3'>
+            <div
+              className={`p-4 px-3 md:px-5 md:max-w-2xl min-h-[230px] ${
+                todoState.lists[listId] ? 'bg-white' : 'bg-gray-100'
+              } shadow-md rounded-lg`}
+            >
+              {todoState.lists[listId] ? (
+                <Todo listId={listId} />
+              ) : (
+                <div className='text-center text-xl mt-8 font-semibold text-gray-400'>
+                  Select a list or create a new one ¯\_(ツ)_/¯
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
+      <Footer /> {/* Footer remains outside but within the flex container */}
       <TrashPopup toClose={() => dispatch(closeTrash())} listId={listId} />
     </div>
   );

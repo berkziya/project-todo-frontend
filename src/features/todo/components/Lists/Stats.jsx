@@ -9,10 +9,11 @@ const Stats = ({ listId }) => {
   return (
     <div
       className={`${
-        done === total && total !== 0
+        done === total && done > 0
           ? 'bg-teal-200 text-white'
           : 'bg-gray-100 text-gray-400'
-      } px-2 py-1 rounded-lg `}
+      } 
+      ${total === 0 ? 'hidden' : ''} px-2 py-1 rounded-lg text-sm`}
     >
       {done}/{total}
     </div>

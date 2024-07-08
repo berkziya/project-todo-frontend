@@ -18,8 +18,9 @@ import { randomString } from './shared/utils/misc';
 const App = () => {
   const todoState = useSelector((state) => state.todo);
   const dispatch = useDispatch();
-  let { listId } = useParams();
   let navigate = useNavigate();
+
+  let { listId } = useParams();
 
   useEffect(() => {
     if (!listId || !todoState.lists[listId]) {
@@ -31,10 +32,6 @@ const App = () => {
     dispatch(setActiveList({ listId }));
     navigate(`/project-todo-frontend/${listId}`);
   }, [dispatch, listId, todoState.lists]);
-
-  if (!listId) {
-    return null;
-  }
 
   return (
     <div className='flex flex-col'>

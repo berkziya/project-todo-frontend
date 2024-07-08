@@ -8,8 +8,6 @@ const initialState = {
       tasks: []
     }
   },
-  isTrashOpen: false,
-  isEmojiSelectorOpen: false
 };
 
 export const safeEmojis = [
@@ -152,6 +150,18 @@ export const todoSlice = createSlice({
     },
     closeEmojiSelector: (state) => {
       state.isEmojiSelectorOpen = false;
+    },
+    openAboutPopup: (state) => {
+      state.isAboutPopupOpen = true;
+    },
+    closeAboutPopup: (state) => {
+      state.isAboutPopupOpen = false;
+    },
+    openContactPopup: (state) => {
+      state.isContactPopupOpen = true;
+    },
+    closeContactPopup: (state) => {
+      state.isContactPopupOpen = false;
     }
   }
 });
@@ -172,6 +182,10 @@ export const {
   changeListName,
   setEmoji,
   openEmojiSelector,
-  closeEmojiSelector
+  closeEmojiSelector,
+  openAboutPopup,
+  closeAboutPopup,
+  openContactPopup,
+  closeContactPopup
 } = todoSlice.actions;
 export default todoSlice.reducer;

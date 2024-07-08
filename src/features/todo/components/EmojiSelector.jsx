@@ -1,4 +1,3 @@
-import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { closeEmojiSelector, safeEmojis, setEmoji } from '../todoSlice';
 import Popup from '../../../shared/components/Popup';

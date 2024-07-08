@@ -2,11 +2,12 @@ import { useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 
-import Todo from './features/todo/Todo.jsx';
+import Todo from './features/todo/Todo';
 import { closeTrash, createList } from './features/todo/todoSlice';
-import TrashPopup from './features/todo/components/Trash/TrashPopup.jsx';
+import TrashPopup from './features/todo/components/Trash/TrashPopup';
 import Lists from './features/todo/components/Lists/Lists';
 import Footer from './shared/components/Footer';
+import EmojiSelector from './features/todo/components/EmojiSelector';
 
 const App = () => {
   const todoState = useSelector((state) => state.todo);
@@ -49,7 +50,8 @@ const App = () => {
           </div>
         </div>
       </div>
-      <Footer /> {/* Footer remains outside but within the flex container */}
+      <Footer />
+      <EmojiSelector />
       <TrashPopup toClose={() => dispatch(closeTrash())} listId={listId} />
     </div>
   );

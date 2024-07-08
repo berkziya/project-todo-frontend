@@ -1,6 +1,12 @@
 import { useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addTask, deleteTask, openTrash, changeListName } from './todoSlice';
+import {
+  addTask,
+  deleteTask,
+  openTrash,
+  changeListName,
+  openEmojiSelector,
+} from './todoSlice';
 import Task from './components/Task';
 import { FaPlus, FaTrash, FaPencil } from 'react-icons/fa6';
 
@@ -41,9 +47,14 @@ function Todo({ listId }) {
           <div className='invisible px-5 py-1'></div>
           <div className='flex-grow'>
             <div className='flex items-center justify-center'>
-              <div className='text-3xl'>
+              <button
+                className='text-3xl'
+                onClick={() => {
+                  dispatch(openEmojiSelector());
+                }}
+              >
                 {todoState.lists[listId].emoji ?? '👻'}
-              </div>
+              </button>
               <input
                 id='list-name'
                 type='text'

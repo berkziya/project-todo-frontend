@@ -3,26 +3,37 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Todo from './features/todo/Todo';
-import { closeTrash, createList } from './features/todo/todoSlice';
+import {
+  closeTrash,
+  createList,
+  setActiveList,
+} from './features/todo/todoSlice';
 import TrashPopup from './features/todo/components/Trash/TrashPopup';
 import Lists from './features/todo/components/Lists/Lists';
 import Footer from './shared/components/Footer';
 import EmojiSelector from './features/todo/components/EmojiSelector';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const App = () => {
   const todoState = useSelector((state) => state.todo);
   const dispatch = useDispatch();
-
-  let listId = todoState.activeList;
+  let { listId } = useParams();
+  let navigate = useNavigate();
 
   useEffect(() => {
     if (!listId || !todoState.lists[listId]) {
-      listId = Object.keys(todoState.lists)[0] || '0';
-      if (!todoState.lists[listId]) {
-        dispatch(createList({ listId: '0' }));
-      }
+      listId = todoState.lists ? Object.keys(todoState.lists)[0] : '0';
     }
+    if (!todoState.lists[listId]) {
+      dispatch(createList({ listId: '0' }));
+    }
+    dispatch(setActiveList({ listId }));
+    navigate(`/project-todo-frontend/${listId}`);
   }, [dispatch, listId, todoState.lists]);
+
+  if (!listId) {
+    return null;
+  }
 
   return (
     <div className='flex flex-col'>
@@ -30,7 +41,7 @@ const App = () => {
         <div className='p-4 md:mr-4 md:min-w-80 md:max-w-96 shadow-md basis-1/3 min-h-screen'>
           <div className='m-3'>
             <img
-              src='logo.png'
+              src='logo.svg'
               className='mb-0 md:mb-10 max-w-64 mx-auto invisible h-0 md:visible md:h-auto'
               alt='logo'
             />
@@ -40,7 +51,7 @@ const App = () => {
         </div>
         <div className='basis-3/4 flex-col'>
           <img
-            src='logo.png'
+            src='logo.svg'
             className='mb-0 md:mb-10 max-w-64 mx-auto visible h-auto md:invisible md:h-0 mt-10'
             alt='logo'
           />

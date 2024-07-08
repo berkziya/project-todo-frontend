@@ -4,10 +4,12 @@ import { randomString } from '../../../../shared/utils/misc';
 import { FaRegTrashCan, FaPlus } from 'react-icons/fa6';
 
 import Stats from './Stats';
+import { useNavigate } from 'react-router-dom';
 
 const Lists = () => {
   const todoState = useSelector((state) => state.todo);
   const dispatch = useDispatch();
+  let navigate = useNavigate();
 
   function areYouSure(listId) {
     if (
@@ -32,7 +34,10 @@ const Lists = () => {
             className={`rounded-lg flex w-full items-center justify-between p-3 border-b border-gray-200 text-gray-500 hover:bg-teal-100 hover:text-gray-700 hover:font-semibold ${
               todoState.activeList === listId ? 'font-bold bg-teal-50' : ''
             }`}
-            onClick={() => dispatch(setActiveList({ listId }))}
+            onClick={() => {
+              dispatch(setActiveList({ listId }));
+              navigate(`/project-todo-frontend/${listId}`);
+            }}
             onDoubleClick={() => {
               const listNameInput = document.querySelector('#list-name');
               listNameInput.focus();

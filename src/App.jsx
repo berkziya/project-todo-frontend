@@ -36,6 +36,11 @@ const App = () => {
               todoState.lists[listId] ? 'bg-white' : 'bg-gray-100'
             } shadow-md rounded-lg`}
           >
+            {!todoState.lists[listId] && (
+              <div className='text-center text-xl mt-1 font-semibold text-gray-400'>
+                Select a list or create a new one ¯\_(ツ)_/¯
+              </div>
+            )}
             {todoState.lists[listId] && <Todo listId={listId} />}
           </div>
         </div>

@@ -39,11 +39,9 @@ const Task = ({ listId, task, icon = 'delete', func = null }) => {
           );
         }}
         onKeyDown={(event) => {
-          if (event.key === 'Enter' && !event.shiftKey) {
-            event.preventDefault(); // Prevent the default Enter key behavior
-            event.target.blur(); // Trigger the onBlur event handler
+          if (event.key === 'Enter' && event.shiftKey) {
+            event.target.blur();
           }
-          // Allow Shift+Enter to insert a line break, no additional code needed
         }}
         className={`${
           task.status === 'done' ? 'text-gray-400 italic' : ''

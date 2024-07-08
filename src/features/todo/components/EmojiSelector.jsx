@@ -6,7 +6,7 @@ import Popup from '../../../shared/components/Popup';
 const EmojiSelector = () => {
   const todoState = useSelector((state) => state.todo);
   const dispatch = useDispatch();
-  if (todoState.isEmojiSelectorOpen === false) return null;
+  if (todoState.isEmojiSelectorOpen !== true) return null;
 
   return (
     <Popup

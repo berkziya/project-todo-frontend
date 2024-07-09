@@ -10,7 +10,10 @@ import {
 import Task from './components/Task';
 import { FaPlus, FaTrash, FaPencil } from 'react-icons/fa6';
 
+import { useTranslation } from 'react-i18next';
+
 function Todo({ listId }) {
+  const { t } = useTranslation();
   const todoState = useSelector((state) => state.todo);
   const dispatch = useDispatch();
   const taskInputRef = useRef(null);
@@ -107,7 +110,7 @@ function Todo({ listId }) {
           <form onSubmit={handleSubmit} className='flex gap-2'>
             <input
               type='text'
-              placeholder='Enter your task'
+              placeholder={t('enterTask')}
               ref={taskInputRef}
               className='w-full border-gray-300 border-2 px-6 py-2 rounded-lg'
             />
@@ -135,7 +138,7 @@ function Todo({ listId }) {
               ))
           ) : (
             <div className='ml-8 text-gray-400 min-h-[40px] mt-4'>
-              No tasks yet
+              {t('noTasks')}
             </div>
           )}
         </div>

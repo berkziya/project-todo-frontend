@@ -5,7 +5,7 @@ const initialState = {
   lists: {
     0: {
       name: 'To Do',
-      tasks: []
+      tasks: [],
     }
   },
 };
@@ -142,8 +142,9 @@ export const todoSlice = createSlice({
       }
     },
     setEmoji: (state, action) => {
-      const { emoji, listId } = action.payload;
-      state.lists[listId].emoji = emoji;
+      const { emoji_, listId } = action.payload;
+      if (!state.lists[listId]) return;
+      state.lists[listId].emoji = emoji_;
     },
     openEmojiSelector: (state) => {
       state.isEmojiSelectorOpen = true;

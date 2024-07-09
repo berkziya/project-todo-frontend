@@ -1,0 +1,12 @@
+{
+  "myLists": "My Lists",
+  "addList": "Add List",
+  "enterTask": "Enter your task",
+  "about": "About",
+  "newListName": "My Todo List",
+  "noTasks": "No tasks yet",
+  "deletedTasks": "Deleted Tasks",
+  "areYouSureTaskDelete": "Are you sure? This will delete all tasks permanently.",
+  "areYouSureListDelete": "Are you sure? This will delete the list and all its tasks permanently.",
+  "selectEmoji": "Select an emoji"
+}

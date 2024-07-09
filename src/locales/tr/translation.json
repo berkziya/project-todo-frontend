@@ -1,0 +1,12 @@
+{
+  "myLists": "Listelerim",
+  "addList": "Liste Ekle",
+  "enterTask": "Görevinizi girin",
+  "about": "Hakkında",
+  "newListName": "Yapılacaklar Listem",
+  "noTasks": "Henüz görev yok",
+  "deletedTasks": "Silinen Görevler",
+  "areYouSureTaskDelete": "Emin misiniz? Bu, tüm görevleri kalıcı olarak silecek.",
+  "areYouSureListDelete": "Emin misiniz? Bu, listeyi ve tüm görevlerini kalıcı olarak silecek.",
+  "selectEmoji": "Bir emoji seçin"
+}

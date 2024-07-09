@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import App from './App';
 import { About } from './About';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import './i18n';
 
 const container = document.getElementById('root');
 const root = createRoot(container);

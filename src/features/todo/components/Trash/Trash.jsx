@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { restoreTask, emptyTrash } from '../../todoSlice';
 import CloseIcon from '../../../../shared/components/CloseIcon';
 
+import { useTranslation } from 'react-i18next';
+
 const deleteIcon = (
   <svg
     xmlns='http://www.w3.org/2000/svg'
@@ -21,6 +23,7 @@ const deleteIcon = (
 );
 
 const Trash = ({ toClose }) => {
+  const { t } = useTranslation();
   const todoState = useSelector((state) => state.todo);
   const dispatch = useDispatch();
 
@@ -29,9 +32,7 @@ const Trash = ({ toClose }) => {
   );
 
   const areYouSure = () => {
-    if (
-      window.confirm(' Are you sure? This will delete all tasks permanently.')
-    ) {
+    if (window.confirm(t('areYouSureTaskDelete'))) {
       dispatch(emptyTrash({ listId: todoState.activeList }));
       toClose();
     }
@@ -40,7 +41,7 @@ const Trash = ({ toClose }) => {
   return (
     <div>
       <div className='flex justify mx-4 mb-3'>
-        <h1 className='text-xl font-semibold mx-auto'>Deleted tasks</h1>
+        <h1 className='text-xl font-semibold mx-auto'>{t('deletedTasks')}</h1>
         <button onClick={areYouSure}>{deleteIcon}</button>
         <CloseIcon toClose={toClose} className='size-9 pb-2' />
       </div>

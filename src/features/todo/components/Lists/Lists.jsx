@@ -6,17 +6,16 @@ import { FaRegTrashCan, FaPlus } from 'react-icons/fa6';
 import Stats from './Stats';
 import { useNavigate } from 'react-router-dom';
 
+import { useTranslation } from 'react-i18next';
+
 const Lists = () => {
+  const { t } = useTranslation();
   const todoState = useSelector((state) => state.todo);
   const dispatch = useDispatch();
   let navigate = useNavigate();
 
   function areYouSure(listId) {
-    if (
-      window.confirm(
-        'Are you sure? This will delete the list and all its tasks.',
-      )
-    ) {
+    if (window.confirm(t('areYouSureListDelete'))) {
       dispatch(deleteList({ listId }));
     }
   }
@@ -24,7 +23,7 @@ const Lists = () => {
   return (
     <div className='flex flex-col'>
       <div className='text-xl font-semibold text-gray-600 mb-3 ml-3'>
-        My Lists
+        {t('myLists')}
       </div>
       <div className='border-b border-gray-200'></div>
       <div className='flex-grow overflow-y-auto'>
@@ -62,7 +61,7 @@ const Lists = () => {
           className='p-2 px-4 m-3 mx-1 mb-0 flex items-center rounded-lg bg-teal-100 hover:bg-teal-200 text-teal-500 hover:text-teal-700'
         >
           <FaPlus size={20} />
-          <span className='ml-2'>Add List</span>
+          <span className='ml-2'>{t('addList')}</span>
         </button>
       </div>
     </div>

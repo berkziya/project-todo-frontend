@@ -16,13 +16,14 @@ const migrations = {
     };
   },
   2: (state) => {
-    const lists = JSON.parse(localStorage.getItem('lists') || '[]');
+    // Migration to support multiple lists
+    const lists = JSON.parse(localStorage.getItem('lists') || '{}');
     const activeList = localStorage.getItem('activeList') || null;
     return {
       ...state,
       todo: {
-        activeList: localStorage.getItem('activeList'),
-        lists: JSON.parse(lists || '[]'),
+        activeList: activeList,
+        lists: lists,
       },
       version: 2,
     };

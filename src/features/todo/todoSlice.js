@@ -99,9 +99,9 @@ export const todoSlice = createSlice({
         return task;
       }).sort((a, b) => {
         if (a.status === 'done' && b.status === 'done') {
-          return b.completedDate - a.completedDate; // Sort done tasks by completedDate descending
+          return b.completedDate - a.completedDate;
         }
-        return a.status === 'pending' ? -1 : 1; // Pending tasks first
+        return a.status === 'pending' ? -1 : 1;
       });
     },
     openTrash: (state) => {
@@ -142,8 +142,8 @@ export const todoSlice = createSlice({
       }
     },
     setEmoji: (state, action) => {
-      const { emoji } = action.payload;
-      state.lists[state.activeList].emoji = emoji;
+      const { emoji, listId } = action.payload;
+      state.lists[listId].emoji = emoji;
     },
     openEmojiSelector: (state) => {
       state.isEmojiSelectorOpen = true;
@@ -151,18 +151,6 @@ export const todoSlice = createSlice({
     closeEmojiSelector: (state) => {
       state.isEmojiSelectorOpen = false;
     },
-    openAboutPopup: (state) => {
-      state.isAboutPopupOpen = true;
-    },
-    closeAboutPopup: (state) => {
-      state.isAboutPopupOpen = false;
-    },
-    openContactPopup: (state) => {
-      state.isContactPopupOpen = true;
-    },
-    closeContactPopup: (state) => {
-      state.isContactPopupOpen = false;
-    }
   }
 });
 
@@ -183,9 +171,5 @@ export const {
   setEmoji,
   openEmojiSelector,
   closeEmojiSelector,
-  openAboutPopup,
-  closeAboutPopup,
-  openContactPopup,
-  closeContactPopup
 } = todoSlice.actions;
 export default todoSlice.reducer;

@@ -7,13 +7,12 @@ const EmojiSelector = () => {
   const dispatch = useDispatch();
   if (todoState.isEmojiSelectorOpen !== true) return null;
 
+  const toClose = () => {
+    dispatch(closeEmojiSelector());
+  };
+
   return (
-    <Popup
-      toClose={() => {
-        dispatch(closeEmojiSelector());
-      }}
-      closable={true}
-    >
+    <Popup toClose={toClose}>
       <div>
         <div className='text-xl font-semibold text-gray-600 mb-3 ml-3'>
           Select an Emoji
@@ -25,7 +24,7 @@ const EmojiSelector = () => {
               key={emoji}
               onClick={() => {
                 dispatch(setEmoji({ emoji }));
-                dispatch(closeEmojiSelector());
+                toClose();
               }}
             >
               <div className='m-1'>{emoji}</div>

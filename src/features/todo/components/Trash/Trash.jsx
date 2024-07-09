@@ -20,11 +20,11 @@ const deleteIcon = (
   </svg>
 );
 
-const Trash = ({ toClose, listId }) => {
+const Trash = ({ toClose }) => {
   const todoState = useSelector((state) => state.todo);
   const dispatch = useDispatch();
 
-  const deletedTasks = todoState.lists[listId].tasks.filter(
+  const deletedTasks = todoState.lists[todoState.activeList].tasks.filter(
     (task) => task.status === 'deleted',
   );
 
@@ -32,7 +32,7 @@ const Trash = ({ toClose, listId }) => {
     if (
       window.confirm(' Are you sure? This will delete all tasks permanently.')
     ) {
-      dispatch(emptyTrash({ listId }));
+      dispatch(emptyTrash({ listId: todoState.activeList }));
       toClose();
     }
   };
@@ -50,7 +50,11 @@ const Trash = ({ toClose, listId }) => {
             key={k.id}
             task={k}
             icon='restore'
-            func={() => dispatch(restoreTask({ taskId: k.id, listId }))}
+            func={() =>
+              dispatch(
+                restoreTask({ taskId: k.id, listId: todoState.activeList }),
+              )
+            }
           />
         ))}
       </div>

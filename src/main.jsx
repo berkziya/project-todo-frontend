@@ -5,6 +5,7 @@ import store from './store';
 import { Provider } from 'react-redux';
 
 import App from './App';
+import { About } from './About';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 const container = document.getElementById('root');
@@ -16,6 +17,7 @@ root.render(
       <Routes>
         <Route path='/project-todo-frontend/' element={<App />} />
         <Route path='/project-todo-frontend/:listId' element={<App />} />
+        <Route path='/project-todo-frontend/about' element={<About />} />
       </Routes>
     </BrowserRouter>
   </Provider>,

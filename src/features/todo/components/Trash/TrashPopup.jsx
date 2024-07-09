@@ -1,14 +1,21 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Popup from '../../../../shared/components/Popup';
 import Trash from './Trash';
+import { closeTrash } from '../../todoSlice';
 
-const TrashPopup = ({ toClose, listId }) => {
+const TrashPopup = () => {
   const todoState = useSelector((state) => state.todo);
+  const dispatch = useDispatch();
+
   if (todoState.isTrashOpen !== true) return null;
+
+  const toClose = () => {
+    dispatch(closeTrash());
+  };
 
   return (
     <Popup toClose={toClose}>
-      <Trash toClose={toClose} listId={listId} />
+      <Trash toClose={toClose} />
     </Popup>
   );
 };

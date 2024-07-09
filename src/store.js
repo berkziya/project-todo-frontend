@@ -1,6 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
 import todoReducer from './features/todo/todoSlice';
-import { version } from 'leaflet';
+import firestoreMiddleware from './shared/firestoreMiddleware';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { db } from './firebase';
 
 const migrations = {
   1: (state) => {
@@ -38,7 +40,21 @@ const clearOldStorage = () => {
   oldKeys.forEach(key => localStorage.removeItem(key));
 };
 
-const reHydrateStore = () => {
+const reHydrateStore = async () => {
+  const userId = 'userId';
+  const userDocRef = doc(db, 'users', userId);
+  try {
+    const docSnap = await getDoc(userDocRef);
+    console.log('Document data:', docSnap.data());
+    if (docSnap.exists()) {
+      return { todo: docSnap.data().state };
+    } else {
+      console.log("No such document!");
+    }
+  } catch (error) {
+    console.error('Error fetching document: ', error);
+  }
+
   const storedState = localStorage.getItem('state');
 
   if (storedState !== null) {
@@ -61,12 +77,17 @@ const localStorageMiddleware = store => next => action => {
   return result;
 };
 
-export const store = configureStore({
-  reducer: {
-    todo: todoReducer,
-  },
-  preloadedState: reHydrateStore(),
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(localStorageMiddleware),
-});
+const createStore = async () => {
+  const preloadedState = await reHydrateStore();
 
-export default store;
+  return configureStore({
+    reducer: {
+      todo: todoReducer,
+    },
+    preloadedState,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(firestoreMiddleware),
+    // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(localStorageMiddleware),
+  });
+};
+
+export default createStore;

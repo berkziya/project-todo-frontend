@@ -1,33 +1,63 @@
 import { configureStore } from '@reduxjs/toolkit';
 import todoReducer from './features/todo/todoSlice';
-// import statsReducer from './features/stats/statsReducer';
+
+const migrations = {
+  1: (state) => {
+    // Migration from tasks to a single list
+    const tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+    return {
+      ...state,
+      todo: {
+        ...state.todo,
+        activeList: 'defaultList',
+        lists: [{ id: 'defaultList', name: 'Default List', tasks }],
+      },
+      version: 1,
+    };
+  },
+  2: (state) => {
+    return {
+      ...state,
+      activeList: localStorage.getItem('activeList'),
+      lists: JSON.parse(localStorage.getItem('lists') || '[]'),
+      version: 2,
+    };
+  },
+};
+
+const currentVersion = 2;
+
+const clearOldStorage = () => {
+  const oldKeys = ['tasks', 'lists', 'activeList'];
+  oldKeys.forEach(key => localStorage.removeItem(key));
+};
+
+const reHydrateStore = () => {
+  const storedState = localStorage.getItem('state');
+
+  if (storedState !== null) {
+    let state = JSON.parse(storedState);
+    const storedVersion = state.version || 0;
+    for (let version = storedVersion + 1; version <= currentVersion; version++) {
+      if (migrations[version]) {
+        state = migrations[version](state);
+      }
+    }
+    clearOldStorage();
+    return state;
+  }
+};
 
 const localStorageMiddleware = store => next => action => {
   const result = next(action);
   const state = store.getState();
-  localStorage.setItem('lists', JSON.stringify(state.todo.lists));
-  localStorage.setItem('activeList', state.todo.activeList);
+  localStorage.setItem('state', JSON.stringify({ ...state, version: currentVersion }));
   return result;
-};
-
-const reHydrateStore = () => {
-  const storedLists = localStorage.getItem('lists');
-  const activeList = localStorage.getItem('activeList');
-  if (storedLists !== null && activeList !== null) {
-    return {
-      todo: {
-        lists: JSON.parse(storedLists),
-        activeList: activeList,
-      }
-    };
-  }
-  return undefined;
 };
 
 export const store = configureStore({
   reducer: {
     todo: todoReducer,
-    // stats: statsReducer,
   },
   preloadedState: reHydrateStore(),
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(localStorageMiddleware),

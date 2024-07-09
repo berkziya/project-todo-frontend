@@ -85,8 +85,7 @@ const createStore = async () => {
       todo: todoReducer,
     },
     preloadedState,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(firestoreMiddleware),
-    // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(localStorageMiddleware),
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(firestoreMiddleware)//.concat(localStorageMiddleware),
   });
 };
 

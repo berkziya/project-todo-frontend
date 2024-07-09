@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import todoReducer from './features/todo/todoSlice';
+import { version } from 'leaflet';
 
 const migrations = {
   1: (state) => {
@@ -11,8 +12,8 @@ const migrations = {
         ...state.todo,
         activeList: 'defaultList',
         lists: [{ id: 'defaultList', name: 'Default List', tasks }],
+        version: 1,
       },
-      version: 1,
     };
   },
   2: (state) => {
@@ -24,8 +25,8 @@ const migrations = {
       todo: {
         activeList: activeList,
         lists: lists,
+        version: 2,
       },
-      version: 2,
     };
   },
 };
@@ -42,7 +43,7 @@ const reHydrateStore = () => {
 
   if (storedState !== null) {
     let state = JSON.parse(storedState);
-    const storedVersion = state.version || 0;
+    const storedVersion = state.todo.version || 0;
     for (let version = storedVersion + 1; version <= currentVersion; version++) {
       if (migrations[version]) {
         state = migrations[version](state);
@@ -56,7 +57,7 @@ const reHydrateStore = () => {
 const localStorageMiddleware = store => next => action => {
   const result = next(action);
   const state = store.getState();
-  localStorage.setItem('state', JSON.stringify({ ...state, version: currentVersion }));
+  localStorage.setItem('state', JSON.stringify({ ...state, 'todo': { ...state['todo'], version: currentVersion } }));
   return result;
 };
 

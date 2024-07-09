@@ -16,10 +16,14 @@ const migrations = {
     };
   },
   2: (state) => {
+    const lists = JSON.parse(localStorage.getItem('lists') || '[]');
+    const activeList = localStorage.getItem('activeList') || null;
     return {
       ...state,
-      activeList: localStorage.getItem('activeList'),
-      lists: JSON.parse(localStorage.getItem('lists') || '[]'),
+      todo: {
+        activeList: localStorage.getItem('activeList'),
+        lists: JSON.parse(lists || '[]'),
+      },
       version: 2,
     };
   },

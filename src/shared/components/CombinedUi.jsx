@@ -12,13 +12,13 @@ const CombinedUi = ({ children }) => {
   let navigate = useNavigate();
 
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col min-h-screen'>
       <Header />
-      <div className='flex flex-col-reverse md:flex-row'>
-        <div className='p-4 md:mr-4 md:min-w-80 md:max-w-96 shadow-md basis-1/3 min-h-screen'>
+      <div className='flex flex-col-reverse md:flex-row md:flex-grow'>
+        <div className='p-4 md:mr-4 md:min-w-80 md:max-w-96 justify-items-start shadow-md basis-1/3'>
           <div className='m-3'>
             <button
-              className='mb-0 md:mb-10 invisible h-auto md:visible md:m-auto'
+              className='mb-10 hidden md:block'
               onClick={() => {
                 navigate('/project-todo-frontend');
               }}

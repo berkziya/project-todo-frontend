@@ -24,6 +24,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
           <Route path='/project-todo-frontend/' element={<App />} />
           <Route path='/project-todo-frontend/:listId' element={<App />} />
           <Route path='/project-todo-frontend/about' element={<About />} />
+          <Route path='/' element={<App />} />
+          <Route path='/:listId' element={<App />} />
+          <Route path='/about' element={<About />} />
         </Routes>
       </BrowserRouter>
     </Provider>,

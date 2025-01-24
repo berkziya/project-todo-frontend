@@ -24,7 +24,7 @@ const CombinedUi = ({ children }) => {
               }}
             >
               <img
-                src={`${window.location.protocol}//${window.location.hostname}:${window.location.port}/project-todo-frontend/logo.svg`}
+                src={`${window.location.protocol}//${window.location.hostname}:${window.location.port}/logo.svg`}
                 alt='logo'
               />
             </button>
@@ -41,7 +41,7 @@ const CombinedUi = ({ children }) => {
               }}
             >
               <img
-                src={`${window.location.protocol}//${window.location.hostname}:${window.location.port}/project-todo-frontend/logo.svg`}
+                src={`${window.location.protocol}//${window.location.hostname}:${window.location.port}/logo.svg`}
                 alt='logo'
               />
             </button>

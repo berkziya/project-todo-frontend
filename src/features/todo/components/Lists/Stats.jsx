@@ -12,7 +12,7 @@ const Stats = ({ listId }) => {
         done === total && done > 0
           ? 'bg-teal-300 text-white font-semibold'
           : 'bg-gray-100 text-gray-400'
-      } 
+      }
       ${total === 0 ? 'hidden' : ''} px-2 py-1 rounded-lg text-sm`}
     >
       {done}/{total}

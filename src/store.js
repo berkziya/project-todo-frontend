@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import todoReducer from './features/todo/todoSlice';
 import firestoreMiddleware from './shared/firestoreMiddleware';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 import { db } from './firebase';
 
 const migrations = {

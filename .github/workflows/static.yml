@@ -38,7 +38,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Build
-        run: pnpm run build
+        run: pnpm run buildgithub
       - name: Copy index.html to 404.html
         run: cp ./dist/index.html ./dist/404.html
       - name: Setup Pages
